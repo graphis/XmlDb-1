@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<test1>
+    <testNode value="test" valueA="a" valueB="b" valueC="c">Test Node 1</testNode>
+    <testNode value="test" valueA="1" valueB="2" valueC="3">Test Node 2</testNode>
+</test1>

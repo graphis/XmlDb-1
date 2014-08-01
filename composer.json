@@ -1,0 +1,17 @@
+{
+    "name": "jeremysells/xmldb",
+    "description": "PHP XML database abstraction",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jeremy Sells",
+            "homepage": "http://jeremysells.info/contact"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3"
+    },
+    "autoload": {
+        "psr-4": { "JeremySells\\XmlDb\\": "src/" }
+    }
+}

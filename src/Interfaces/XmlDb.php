@@ -53,6 +53,28 @@ interface XmlDb
      * @return \DOMXPath
      */
     public function getXPath();
+    
+    /**
+     * Prefixes (replaces) single quotes with slash ("'" -> "\'")
+     * @param string $value
+     * @return string
+     */
+    public function slashQuote($value);
+    
+    /**
+     * Prefixes (replaces) double quotes with slash ('"' -> '\"')
+     * @param string $value
+     * @return string
+     */
+    public function slashQuotes($value);
+    
+    /**
+     * Runs an xpath query
+     * @param string $xpathExpression
+     * @return \DOMNodeList
+     * @throws \Exception
+     */
+    public function query($xpathExpression);
 
     /**
      * Clears all data

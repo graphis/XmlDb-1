@@ -9,7 +9,7 @@
 namespace JeremySells\XmlDb;
 
 /**
- * Xml database abstraction. Can be extended. Used as an instance.
+ * Xml database abstraction. Can be extended.
  */
 class XmlDb implements Interfaces\XmlDb
 {
@@ -95,6 +95,7 @@ class XmlDb implements Interfaces\XmlDb
      * Gets the dom
      * 
      * @return \DOMDocument
+     * @throws \Exception
      */
     public function getDom()
     {
@@ -104,7 +105,12 @@ class XmlDb implements Interfaces\XmlDb
         if ($this->domDocument === null) {
             $this->domDocument = new \DOMDocument();
             if ($this->loadFile !== null) {
-                $this->domDocument->load($this->loadFile);
+                $result = $this->domDocument->load($this->loadFile);
+                if (!$result) {
+                    throw new \Exception(
+                        "Failed to open xml file ".$this->loadFile
+                    );
+                }
             }
         }
         return $this->domDocument;
@@ -122,7 +128,44 @@ class XmlDb implements Interfaces\XmlDb
         }
         return $this->xPath;
     }
-
+    
+    /**
+     * Prefixes (replaces) single quotes with slash ("'" -> "\'")
+     * http://php.net/manual/en/simplexmlelement.xpath.php#106361
+     * @param string $value
+     * @return string
+     */
+    public function slashQuote($value)
+    {
+        return str_replace("'", "\'", $value);
+    }
+    
+    /**
+     * Prefixes (replaces) double quotes with slash ('"' -> '\"')
+     * @param string $value
+     * @return string
+     */
+    public function slashQuotes($value)
+    {
+        return str_replace('"', '\"', $value);
+    }
+    
+    /**
+     * Runs an xpath query
+     * @param string $xpathExpression
+     * @return DOMNodeList
+     * @throws Exception
+     */
+    public function query($xpathExpression)
+    {
+        $xpath = $this->getXPath();
+        $result = $xpath->query($xpathExpression);
+        if ($result === false || $result === null) {
+            throw new Exception("Bad xpath query of ".$xpath);
+        }
+        return $result;
+    }
+    
     /**
      * Clears all data
      * 
